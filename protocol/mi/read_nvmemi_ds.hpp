@@ -18,31 +18,27 @@
 
 #include "../mi_msg.hpp"
 
-namespace nvmemi::protocol::readnvmeds
-{
-enum class DataStructureType : uint8_t
-{
-    nvmSubsystemInfo = 0x00,
-    portInfo = 0x01,
-    controllerList = 0x02,
-    controllerInfo = 0x03,
-    optionalCommands = 0x04,
-    reserverd = 0x05
+namespace nvmemi::protocol::readnvmeds {
+enum class DataStructureType : uint8_t {
+	nvmSubsystemInfo = 0x00,
+	portInfo		 = 0x01,
+	controllerList	 = 0x02,
+	controllerInfo	 = 0x03,
+	optionalCommands = 0x04,
+	reserverd		 = 0x05
 };
 
-struct RequestData
-{
-    uint16_t controllerId;
-    uint8_t portId;
-    DataStructureType dataStructureType;
+struct RequestData {
+	uint16_t		  controllerId;
+	uint8_t			  portId;
+	DataStructureType dataStructureType;
 } __attribute__((packed));
 
-struct SubsystemInfo
-{
-    uint8_t numberOfPorts;
-    uint8_t majorVersion;
-    uint8_t minorVersion;
-    uint8_t reserverd[29];
+struct SubsystemInfo {
+	uint8_t numberOfPorts;
+	uint8_t majorVersion;
+	uint8_t minorVersion;
+	uint8_t reserverd[29];
 } __attribute__((packed));
 
-} // namespace nvmemi::protocol::readnvmeds
+}  // namespace nvmemi::protocol::readnvmeds

@@ -18,21 +18,14 @@
 
 #include <algorithm>
 
-namespace nvmemi::thresholds
+namespace nvmemi::thresholds {
+bool hasCriticalInterface(const std::vector<Threshold> &thresholdVector)
 {
-bool hasCriticalInterface(const std::vector<Threshold>& thresholdVector)
-{
-    return std::any_of(thresholdVector.begin(), thresholdVector.end(),
-                       [](const Threshold& threshold) {
-                           return threshold.level == Level::critical;
-                       });
+	return std::any_of(thresholdVector.begin(), thresholdVector.end(), [](const Threshold &threshold) { return threshold.level == Level::critical; });
 }
 
-bool hasWarningInterface(const std::vector<Threshold>& thresholdVector)
+bool hasWarningInterface(const std::vector<Threshold> &thresholdVector)
 {
-    return std::any_of(thresholdVector.begin(), thresholdVector.end(),
-                       [](const Threshold& threshold) {
-                           return threshold.level == Level::warning;
-                       });
+	return std::any_of(thresholdVector.begin(), thresholdVector.end(), [](const Threshold &threshold) { return threshold.level == Level::warning; });
 }
-} // namespace nvmemi::thresholds
+}  // namespace nvmemi::thresholds

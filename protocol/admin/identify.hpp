@@ -16,30 +16,25 @@
 
 #include <cstdint>
 
-namespace nvmemi::protocol::identify
-{
-struct DWord10
-{
-    uint8_t cns;
-    uint8_t reserved;
-    uint16_t controllerId;
+namespace nvmemi::protocol::identify {
+struct DWord10 {
+	uint8_t	 cns;
+	uint8_t	 reserved;
+	uint16_t controllerId;
 } __attribute__((packed));
-struct DWord11
-{
-    uint16_t nvmSetId;
-    uint16_t reserved;
+struct DWord11 {
+	uint16_t nvmSetId;
+	uint16_t reserved;
 } __attribute__((packed));
-struct DWord14
-{
-    uint8_t uuidIndex : 7;
-    uint32_t reserved : 25;
+struct DWord14 {
+	uint8_t	 uuidIndex : 7;
+	uint32_t reserved : 25;
 } __attribute__((packed));
 
-enum class ControllerNamespaceStruct : uint8_t
-{
-    namespaceCapablities = 0x00,
-    controllerIdentify = 0x01,
-    activeNamespace = 0x02,
-    namespaceIdDescriptorList = 0x03,
+enum class ControllerNamespaceStruct : uint8_t {
+	namespaceCapablities	  = 0x00,
+	controllerIdentify		  = 0x01,
+	activeNamespace			  = 0x02,
+	namespaceIdDescriptorList = 0x03,
 };
-} // namespace nvmemi::protocol::identify
+}  // namespace nvmemi::protocol::identify

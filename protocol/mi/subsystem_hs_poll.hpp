@@ -19,89 +19,79 @@
 #include <cstdint>
 #include <stdexcept>
 
-namespace nvmemi::protocol::subsystemhs
-{
+namespace nvmemi::protocol::subsystemhs {
 
-struct RequestDWord1
-{
-    uint32_t reserved : 31;
-    bool clearStatus : 1;
+struct RequestDWord1 {
+	uint32_t reserved : 31;
+	bool	 clearStatus : 1;
 } __attribute__((packed));
 
-struct ResponseData
-{
-    struct SubsystemStatus
-    {
-        uint8_t reservedBit1 : 2;
-        bool port1PCIeActive : 1;
-        bool port0PCIeActive : 1;
-        bool resetNoRequired : 1;
-        bool driveFunctional : 1;
-        uint8_t reservedBit2 : 2;
-    } __attribute__((packed));
-    SubsystemStatus subsystemStatus;
-    uint8_t smartWarnings;
-    uint8_t cTemp;
-    uint8_t driveLifeUsed;
-    struct CompositeControllerStatus
-    {
-        bool ready : 1;
-        bool controllerFatalStatus : 1;
-        bool shutdownStatus : 1;
-        bool reserved1 : 1;
-        bool resetOccured : 1;
-        bool controllerEnableChanged : 1;
-        bool namespaceAttributeChanged : 1;
-        bool firmwareActivated : 1;
-        bool controllerStatusChange : 1;
-        bool compositeTemperatureChange : 1;
-        bool percentageUsed : 1;
-        bool availableSpare : 1;
-        bool criticalWarning : 1;
-        uint8_t reserved2 : 3;
-    } __attribute__((packed));
-    CompositeControllerStatus ccs;
-    uint16_t reserved;
+struct ResponseData {
+	struct SubsystemStatus {
+		uint8_t reservedBit1 : 2;
+		bool	port1PCIeActive : 1;
+		bool	port0PCIeActive : 1;
+		bool	resetNoRequired : 1;
+		bool	driveFunctional : 1;
+		uint8_t reservedBit2 : 2;
+	} __attribute__((packed));
+	SubsystemStatus subsystemStatus;
+	uint8_t			smartWarnings;
+	uint8_t			cTemp;
+	uint8_t			driveLifeUsed;
+	struct CompositeControllerStatus {
+		bool	ready : 1;
+		bool	controllerFatalStatus : 1;
+		bool	shutdownStatus : 1;
+		bool	reserved1 : 1;
+		bool	resetOccured : 1;
+		bool	controllerEnableChanged : 1;
+		bool	namespaceAttributeChanged : 1;
+		bool	firmwareActivated : 1;
+		bool	controllerStatusChange : 1;
+		bool	compositeTemperatureChange : 1;
+		bool	percentageUsed : 1;
+		bool	availableSpare : 1;
+		bool	criticalWarning : 1;
+		uint8_t reserved2 : 3;
+	} __attribute__((packed));
+	CompositeControllerStatus ccs;
+	uint16_t				  reserved;
 } __attribute__((packed));
 
 static inline int8_t convertToCelsius(uint8_t tempByte)
 {
-    switch (tempByte)
-    {
-        case 0x80: {
-            throw std::invalid_argument(
-                "No temperature data or temperature data "
-                "is more the 5 seconds old");
-        }
-        case 0x81: {
-            throw std::invalid_argument("Temperature sensor failure");
-        }
-        case 0x7F: {
-            throw std::invalid_argument("Temperature is 127C or higher");
-        }
-        case 0xC4: {
-            throw std::invalid_argument("Temperature is -60C or lower");
-        }
-        default: {
-            if (0x82 <= tempByte && tempByte <= 0xC3)
-            {
-                throw std::invalid_argument("Reserved value for temperature");
-            }
-            break;
-        }
-    }
+	switch (tempByte) {
+		case 0x80: {
+			throw std::invalid_argument("No temperature data or temperature data "
+										"is more the 5 seconds old");
+		}
+		case 0x81: {
+			throw std::invalid_argument("Temperature sensor failure");
+		}
+		case 0x7F: {
+			throw std::invalid_argument("Temperature is 127C or higher");
+		}
+		case 0xC4: {
+			throw std::invalid_argument("Temperature is -60C or lower");
+		}
+		default: {
+			if (0x82 <= tempByte && tempByte <= 0xC3) {
+				throw std::invalid_argument("Reserved value for temperature");
+			}
+			break;
+		}
+	}
 
-    constexpr uint8_t negativeMin = 0xC5;
-    constexpr uint8_t negativeMax = 0xFF;
-    if (negativeMin <= tempByte && tempByte <= negativeMax)
-    {
-        auto tempVal = static_cast<int8_t>(-1 * (256 - tempByte));
-        return tempVal;
-    }
-    else
-    {
-        return static_cast<int8_t>(tempByte);
-    }
+	constexpr uint8_t negativeMin = 0xC5;
+	constexpr uint8_t negativeMax = 0xFF;
+	if (negativeMin <= tempByte && tempByte <= negativeMax) {
+		auto tempVal = static_cast<int8_t>(-1 * (256 - tempByte));
+		return tempVal;
+	}
+	else {
+		return static_cast<int8_t>(tempByte);
+	}
 }
 
-} // namespace nvmemi::protocol::subsystemhs
+}  // namespace nvmemi::protocol::subsystemhs

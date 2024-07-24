@@ -16,37 +16,34 @@
 
 #include <cstdint>
 
-namespace nvmemi::protocol::getlog
-{
-struct Request
-{
-    uint8_t logPageId;
-    uint8_t logSpecificField : 4;
-    uint8_t reserved1 : 3;
-    bool retainAsyncEvents : 1;
-    uint32_t numberOfDwords;
-    uint16_t logSpecificId;
-    uint64_t logPageOffset;
-    uint8_t uuidIndex : 7;
-    uint32_t reserved2 : 25;
+namespace nvmemi::protocol::getlog {
+struct Request {
+	uint8_t	 logPageId;
+	uint8_t	 logSpecificField : 4;
+	uint8_t	 reserved1 : 3;
+	bool	 retainAsyncEvents : 1;
+	uint32_t numberOfDwords;
+	uint16_t logSpecificId;
+	uint64_t logPageOffset;
+	uint8_t	 uuidIndex : 7;
+	uint32_t reserved2 : 25;
 } __attribute__((packed));
 
-enum class LogPage : uint8_t
-{
-    errorInformation = 0x01,
-    smartHealthInformation = 0x02,
-    firmwareSlotInformation = 0x03,
-    changedNamespaceList = 0x04,
-    commandsSupportedEffects = 0x05,
-    deviceSelfTest = 0x06,
-    telemetryHostInitiated = 0x07,
-    telemetryControllerInitiated = 0x08,
-    enduranceGroupInformation = 0x09,
-    predictableLatencyPerNVMSet = 0x0A,
-    predictableLatencyEventAggregate = 0x0B,
-    asymmetricNamespaceAccess = 0x0C,
-    persistentEventLog = 0x0D,
-    lbaStatusInformation = 0x0E,
-    enduranceGroupEventAggregate = 0x0F,
+enum class LogPage : uint8_t {
+	errorInformation				 = 0x01,
+	smartHealthInformation			 = 0x02,
+	firmwareSlotInformation			 = 0x03,
+	changedNamespaceList			 = 0x04,
+	commandsSupportedEffects		 = 0x05,
+	deviceSelfTest					 = 0x06,
+	telemetryHostInitiated			 = 0x07,
+	telemetryControllerInitiated	 = 0x08,
+	enduranceGroupInformation		 = 0x09,
+	predictableLatencyPerNVMSet		 = 0x0A,
+	predictableLatencyEventAggregate = 0x0B,
+	asymmetricNamespaceAccess		 = 0x0C,
+	persistentEventLog				 = 0x0D,
+	lbaStatusInformation			 = 0x0E,
+	enduranceGroupEventAggregate	 = 0x0F,
 };
-} // namespace nvmemi::protocol::getlog
+}  // namespace nvmemi::protocol::getlog

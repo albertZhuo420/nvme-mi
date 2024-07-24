@@ -19,8 +19,7 @@
 
 #include <vector>
 
-namespace nvmemi::thresholds
-{
+namespace nvmemi::thresholds {
 /**
  * @brief Check if the list contains any critical threshold
  *
@@ -28,7 +27,7 @@ namespace nvmemi::thresholds
  * @return true If the list contains any critical threshold
  * @return false if the list doesnt contains any critical threshold
  */
-bool hasCriticalInterface(const std::vector<Threshold>& thresholdVector);
+bool hasCriticalInterface(const std::vector<Threshold> &thresholdVector);
 
 /**
  * @brief Check if the list contains any warning threshold
@@ -37,5 +36,5 @@ bool hasCriticalInterface(const std::vector<Threshold>& thresholdVector);
  * @return true If the list contains any warning threshold
  * @return false if the list doesnt contains any warning threshold
  */
-bool hasWarningInterface(const std::vector<Threshold>& thresholdVector);
-} // namespace nvmemi::thresholds
+bool hasWarningInterface(const std::vector<Threshold> &thresholdVector);
+}  // namespace nvmemi::thresholds

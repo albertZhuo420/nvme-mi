@@ -13,19 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 */
-namespace nvmemi::protocol
-{
-enum class FeatureID : uint8_t
-{
-    arbitration = 0x01,
-    power = 0x02,
-    temperatureThreshold = 0x04,
-    errorRecovery = 0x05,
-    numberOfQueues = 0x07,
-    interruptCoalescing = 0x08,
-    interruptVectorConfiguration = 0x09,
-    writeAtomicityNormal = 0x0A,
-    asynchronousEventConfiguration = 0x0B,
-    // Optional features are not added
+namespace nvmemi::protocol {
+enum class FeatureID : uint8_t {
+	arbitration					   = 0x01,
+	power						   = 0x02,
+	temperatureThreshold		   = 0x04,
+	errorRecovery				   = 0x05,
+	numberOfQueues				   = 0x07,
+	interruptCoalescing			   = 0x08,
+	interruptVectorConfiguration   = 0x09,
+	writeAtomicityNormal		   = 0x0A,
+	asynchronousEventConfiguration = 0x0B,
+	// Optional features are not added
 };
 }

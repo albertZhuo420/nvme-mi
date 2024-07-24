@@ -17,19 +17,12 @@
 
 #include "threshold.hpp"
 
-namespace nvmemi
-{
-struct ChangeParam
-{
-    ChangeParam(thresholds::Threshold whichThreshold, bool status,
-                double value) :
-        threshold(whichThreshold),
-        asserted(status), assertValue(value)
-    {
-    }
+namespace nvmemi {
+struct ChangeParam {
+	ChangeParam(thresholds::Threshold whichThreshold, bool status, double value) : threshold(whichThreshold), asserted(status), assertValue(value) { }
 
-    thresholds::Threshold threshold;
-    bool asserted;
-    double assertValue;
+	thresholds::Threshold threshold;
+	bool				  asserted;
+	double				  assertValue;
 };
-} // namespace nvmemi
+}  // namespace nvmemi

@@ -15,8 +15,7 @@
 */
 #pragma once
 
-namespace nvmemi::constants
-{
-static constexpr const char* openBmcDBusPrefix = "/xyz/openbmc_project/";
-static constexpr const char* interfacePrefix = "xyz.openbmc_project.";
-} // namespace nvmemi::constants
+namespace nvmemi::constants {
+static constexpr const char *openBmcDBusPrefix = "/xyz/openbmc_project/";
+static constexpr const char *interfacePrefix   = "xyz.openbmc_project.";
+}  // namespace nvmemi::constants

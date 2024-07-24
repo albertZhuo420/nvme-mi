@@ -18,99 +18,71 @@
 
 #include "../nvme_rsp.hpp"
 
-namespace nvmemi::protocol
-{
+namespace nvmemi::protocol {
 
 template <typename T>
 class AdminCommandResponse;
 
 template <>
-class AdminCommandResponse<const uint8_t*>
-    : public virtual NVMeResponse<const uint8_t*>
-{
+class AdminCommandResponse<const uint8_t *> : public virtual NVMeResponse<const uint8_t *> {
   protected:
-    struct ResponseData
-    {
-        uint8_t status;
-        uint32_t reserved : 24;
-        uint32_t cqdword0;
-        uint32_t sqdword1;
-        uint32_t sqdword3;
-    } __attribute__((packed));
+	struct ResponseData {
+		uint8_t	 status;
+		uint32_t reserved : 24;
+		uint32_t cqdword0;
+		uint32_t sqdword1;
+		uint32_t sqdword3;
+	} __attribute__((packed));
 
   public:
-    static constexpr size_t minSize =
-        sizeof(CommonHeader) + sizeof(ResponseData);
-    AdminCommandResponse(const uint8_t* data, size_t len) :
-        NVMeMessage<const uint8_t*>(data, len), NVMeResponse<const uint8_t*>(
-                                                    data, len)
-    {
-        if (len < (minSize + sizeof(CRC32C)))
-        {
-            throw std::runtime_error(
-                "Expected more bytes for AdminCommandResponse response");
-        }
-        buffer =
-            reinterpret_cast<const ResponseData*>(data + sizeof(CommonHeader));
-    }
-    template <typename T>
-    AdminCommandResponse(T&& arr) : AdminCommandResponse(arr.data(), arr.size())
-    {
-    }
-    inline std::pair<const uint8_t*, ssize_t> getResponseData() const noexcept
-    {
-        return std::make_pair(reinterpret_cast<const uint8_t*>(buffer) +
-                                  sizeof(ResponseData),
-                              size - (minSize + sizeof(CRC32C)));
-    }
-    const ResponseData* operator->() const
-    {
-        return buffer;
-    }
-    std::pair<const uint8_t*, ssize_t> getAdminResponseData() const noexcept
-    {
-        return std::make_pair(reinterpret_cast<const uint8_t*>(buffer) +
-                                  sizeof(ResponseData),
-                              (size - minSize - sizeof(CRC32C)));
-    }
+	static constexpr size_t minSize = sizeof(CommonHeader) + sizeof(ResponseData);
+	AdminCommandResponse(const uint8_t *data, size_t len) : NVMeMessage<const uint8_t *>(data, len), NVMeResponse<const uint8_t *>(data, len)
+	{
+		if (len < (minSize + sizeof(CRC32C))) {
+			throw std::runtime_error("Expected more bytes for AdminCommandResponse response");
+		}
+		buffer = reinterpret_cast<const ResponseData *>(data + sizeof(CommonHeader));
+	}
+	template <typename T>
+	AdminCommandResponse(T &&arr) : AdminCommandResponse(arr.data(), arr.size())
+	{ }
+	inline std::pair<const uint8_t *, ssize_t> getResponseData() const noexcept
+	{
+		return std::make_pair(reinterpret_cast<const uint8_t *>(buffer) + sizeof(ResponseData), size - (minSize + sizeof(CRC32C)));
+	}
+	const ResponseData				   *operator->() const { return buffer; }
+	std::pair<const uint8_t *, ssize_t> getAdminResponseData() const noexcept
+	{
+		return std::make_pair(reinterpret_cast<const uint8_t *>(buffer) + sizeof(ResponseData), (size - minSize - sizeof(CRC32C)));
+	}
 
   private:
-    const ResponseData* buffer = nullptr;
+	const ResponseData *buffer = nullptr;
 };
 
 template <>
-class AdminCommandResponse<uint8_t*>
-    : public AdminCommandResponse<const uint8_t*>,
-      public virtual NVMeResponse<uint8_t*>
-{
+class AdminCommandResponse<uint8_t *> : public AdminCommandResponse<const uint8_t *>, public virtual NVMeResponse<uint8_t *> {
   public:
-    AdminCommandResponse(uint8_t* data, size_t len) :
-        NVMeMessage<const uint8_t*>(data, len), NVMeResponse<const uint8_t*>(
-                                                    data, len),
-        NVMeResponse<uint8_t*>(data, len), AdminCommandResponse<const uint8_t*>(
-                                               data, len)
-    {
-        buffer = reinterpret_cast<ResponseData*>(data + sizeof(CommonHeader));
-    }
-    template <typename T>
-    AdminCommandResponse(T&& arr) : AdminCommandResponse(arr.data(), arr.size())
-    {
-    }
-    ResponseData* operator->()
-    {
-        return buffer;
-    }
+	AdminCommandResponse(uint8_t *data, size_t len) :
+	  NVMeMessage<const uint8_t *>(data, len), NVMeResponse<const uint8_t *>(data, len), NVMeResponse<uint8_t *>(data, len),
+	  AdminCommandResponse<const uint8_t *>(data, len)
+	{
+		buffer = reinterpret_cast<ResponseData *>(data + sizeof(CommonHeader));
+	}
+	template <typename T>
+	AdminCommandResponse(T &&arr) : AdminCommandResponse(arr.data(), arr.size())
+	{ }
+	ResponseData *operator->() { return buffer; }
 
   private:
-    ResponseData* buffer;
+	ResponseData *buffer;
 };
 
-AdminCommandResponse(const uint8_t*, size_t)
-    ->AdminCommandResponse<const uint8_t*>;
-AdminCommandResponse(uint8_t*, size_t)->AdminCommandResponse<uint8_t*>;
+AdminCommandResponse(const uint8_t *, size_t) -> AdminCommandResponse<const uint8_t *>;
+AdminCommandResponse(uint8_t *, size_t) -> AdminCommandResponse<uint8_t *>;
 template <typename T>
-AdminCommandResponse(const T&) -> AdminCommandResponse<const uint8_t*>;
+AdminCommandResponse(const T &) -> AdminCommandResponse<const uint8_t *>;
 template <typename T>
-AdminCommandResponse(T&) -> AdminCommandResponse<uint8_t*>;
+AdminCommandResponse(T &) -> AdminCommandResponse<uint8_t *>;
 
-} // namespace nvmemi::protocol
+}  // namespace nvmemi::protocol

@@ -14,24 +14,12 @@
 // limitations under the License.
 */
 
-enum class TestID
-{
-    invalid,
-    createDrive,
-    highThresholdTest,
-    collectLog
-};
+enum class TestID { invalid, createDrive, highThresholdTest, collectLog };
 
-enum class SubTestID
-{
-    invalid,
-    pollSubsystemHS,
-    collectLogSuccess
-};
+enum class SubTestID { invalid, pollSubsystemHS, collectLogSuccess };
 
-struct TestInfo
-{
-    TestID testId;
-    SubTestID subTestId;
-    bool status = true;
+struct TestInfo {
+	TestID	  testId;
+	SubTestID subTestId;
+	bool	  status = true;
 };

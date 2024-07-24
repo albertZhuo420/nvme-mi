@@ -17,34 +17,17 @@
 
 #include <cstdint>
 
-namespace nvmemi::thresholds
-{
+namespace nvmemi::thresholds {
 
-enum class Level : uint8_t
-{
-    invalid,
-    warning,
-    critical
+enum class Level : uint8_t { invalid, warning, critical };
+
+enum class Direction : uint8_t { invalid, high, low };
+
+struct Threshold {
+	constexpr Threshold(const Level lev, const Direction dir, const double val) : level(lev), direction(dir), value(val) { }
+	Level	  level;
+	Direction direction;
+	double	  value;
 };
 
-enum class Direction : uint8_t
-{
-    invalid,
-    high,
-    low
-};
-
-struct Threshold
-{
-    constexpr Threshold(const Level lev, const Direction dir,
-                        const double val) :
-        level(lev),
-        direction(dir), value(val)
-    {
-    }
-    Level level;
-    Direction direction;
-    double value;
-};
-
-} // namespace nvmemi::thresholds
+}  // namespace nvmemi::thresholds

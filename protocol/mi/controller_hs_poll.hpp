@@ -18,26 +18,23 @@
 
 #include <cstdint>
 
-namespace nvmemi::protocol::controllerhspoll
-{
-struct DWord0
-{
-    uint16_t startId;
-    uint8_t maxEntries; // 0's based value
-    bool includePCIFunctions : 1;
-    bool includeSRIOVPhysical : 1;
-    bool includeSRIOVVirtual : 1;
-    uint8_t rsvd1 : 4;
-    bool reportAll : 1;
+namespace nvmemi::protocol::controllerhspoll {
+struct DWord0 {
+	uint16_t startId;
+	uint8_t	 maxEntries;  // 0's based value
+	bool	 includePCIFunctions : 1;
+	bool	 includeSRIOVPhysical : 1;
+	bool	 includeSRIOVVirtual : 1;
+	uint8_t	 rsvd1 : 4;
+	bool	 reportAll : 1;
 } __attribute__((packed));
-struct DWord1
-{
-    bool controllerStatusChanges : 1;
-    bool compositeTemperatureChanges : 1;
-    bool percentageUsed : 1;
-    bool availableSpare : 1;
-    bool criticalWarning : 1;
-    uint32_t rsvd2 : 26;
-    bool clearChangedFlags : 1;
+struct DWord1 {
+	bool	 controllerStatusChanges : 1;
+	bool	 compositeTemperatureChanges : 1;
+	bool	 percentageUsed : 1;
+	bool	 availableSpare : 1;
+	bool	 criticalWarning : 1;
+	uint32_t rsvd2 : 26;
+	bool	 clearChangedFlags : 1;
 } __attribute__((packed));
-} // namespace nvmemi::protocol::controllerhspoll
+}  // namespace nvmemi::protocol::controllerhspoll
